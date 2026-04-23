@@ -13,13 +13,27 @@ import {
 
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+
+function Card({ className = "", ...props }: React.HTMLAttributes<HTMLDivElement>) {
+  return <div className={className} {...props} />;
+}
+
+function CardHeader({ className = "", ...props }: React.HTMLAttributes<HTMLDivElement>) {
+  return <div className={className} {...props} />;
+}
+
+function CardContent({ className = "", ...props }: React.HTMLAttributes<HTMLDivElement>) {
+  return <div className={className} {...props} />;
+}
+
+function CardTitle({ className = "", ...props }: React.HTMLAttributes<HTMLHeadingElement>) {
+  return <h3 className={className} {...props} />;
+}
+
+function CardDescription({ className = "", ...props }: React.HTMLAttributes<HTMLParagraphElement>) {
+  return <p className={className} {...props} />;
+}
+
 import { Separator } from "@/components/ui/separator";
 
 export const metadata: Metadata = {
