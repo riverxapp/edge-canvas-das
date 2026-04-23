@@ -3,7 +3,14 @@
 import Link from "next/link";
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { ArrowRight, CheckCircle2, LayoutDashboard, LineChart, Users } from "lucide-react";
+import {
+  ArrowRight,
+  CheckCircle2,
+  LayoutDashboard,
+  LineChart,
+  ShieldCheck,
+  Users,
+} from "lucide-react";
 
 import { Navbar } from "@/components/Navbar";
 import { Badge } from "@/components/ui/badge";
@@ -35,6 +42,18 @@ const benefits = [
   "Session-aware routing for authenticated users",
 ];
 
+const stats = [
+  { label: "Secure access", value: "Session-aware" },
+  { label: "Navigation", value: "Shared routes" },
+  { label: "UI system", value: "shadcn components" },
+];
+
+const quickLinks = [
+  { href: "/dashboard", label: "Dashboard" },
+  { href: "/dashboard/customers", label: "Customers" },
+  { href: "/dashboard/leads", label: "Leads" },
+];
+
 export default function Home() {
   const router = useRouter();
 
@@ -43,9 +62,8 @@ export default function Home() {
       window.localStorage.getItem("internal-crm-session") ??
       window.localStorage.getItem("crm_session") ??
       window.localStorage.getItem("crm-session");
-    const isAuthenticated = Boolean(session);
 
-    if (isAuthenticated) {
+    if (session) {
       router.replace("/dashboard");
     }
   }, [router]);
@@ -54,15 +72,15 @@ export default function Home() {
     <div className="relative flex min-h-screen flex-col bg-background">
       <Navbar />
       <main className="flex flex-1">
-        <div className="mx-auto flex w-full max-w-7xl flex-col gap-10 px-6 py-12 lg:px-8">
-          <section className="grid items-center gap-8 lg:grid-cols-[1.15fr_0.85fr]">
-            <div className="space-y-6">
-              <Badge variant="secondary" className="rounded-full px-3 py-1">
+        <div className="mx-auto flex w-full max-w-7xl flex-col gap-12 px-6 py-12 lg:px-8">
+          <section className="grid items-center gap-10 lg:grid-cols-[1.08fr_0.92fr]">
+            <div className="space-y-7">
+              <Badge variant="secondary" className="w-fit rounded-full px-3 py-1">
                 Internal CRM
               </Badge>
 
               <div className="space-y-4">
-                <h1 className="max-w-2xl text-4xl font-semibold tracking-tight sm:text-5xl">
+                <h1 className="max-w-2xl text-4xl font-semibold tracking-tight sm:text-5xl lg:text-6xl">
                   A polished workspace for customer and lead management.
                 </h1>
                 <p className="max-w-2xl text-base leading-7 text-muted-foreground sm:text-lg">
@@ -87,7 +105,10 @@ export default function Home() {
 
               <div className="grid gap-3 sm:grid-cols-2">
                 {benefits.map((benefit) => (
-                  <div key={benefit} className="flex items-start gap-3 rounded-lg border bg-card p-4 shadow-sm">
+                  <div
+                    key={benefit}
+                    className="flex items-start gap-3 rounded-lg border bg-card p-4 shadow-sm"
+                  >
                     <CheckCircle2 className="mt-0.5 h-4 w-4 text-primary" />
                     <p className="text-sm leading-6 text-muted-foreground">{benefit}</p>
                   </div>
@@ -95,8 +116,9 @@ export default function Home() {
               </div>
             </div>
 
-            <div className="rounded-2xl border bg-card p-6 shadow-sm">
-              <div className="space-y-2">
+            <div className="relative overflow-hidden rounded-2xl border bg-card p-6 shadow-sm">
+              <div className="absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-primary/80 via-primary to-primary/60" />
+              <div className="space-y-2 pt-2">
                 <p className="text-sm font-medium uppercase tracking-wide text-muted-foreground">
                   Workspace overview
                 </p>
@@ -112,13 +134,18 @@ export default function Home() {
                 {highlights.map((item) => {
                   const Icon = item.icon;
                   return (
-                    <article key={item.title} className="flex items-start gap-4 rounded-xl border p-4">
+                    <article
+                      key={item.title}
+                      className="flex items-start gap-4 rounded-xl border bg-background/60 p-4"
+                    >
                       <div className="rounded-lg bg-primary/10 p-2 text-primary">
                         <Icon className="h-5 w-5" />
                       </div>
                       <div className="space-y-1">
                         <h3 className="font-medium">{item.title}</h3>
-                        <p className="text-sm leading-6 text-muted-foreground">{item.description}</p>
+                        <p className="text-sm leading-6 text-muted-foreground">
+                          {item.description}
+                        </p>
                       </div>
                     </article>
                   );
@@ -126,28 +153,29 @@ export default function Home() {
               </div>
 
               <div className="mt-6 rounded-xl border bg-muted/40 p-4">
-                <p className="text-sm font-medium">Quick access</p>
+                <div className="flex items-center gap-2">
+                  <ShieldCheck className="h-4 w-4 text-primary" />
+                  <p className="text-sm font-medium">Quick access</p>
+                </div>
                 <div className="mt-3 flex flex-wrap gap-3">
-                  <Button asChild variant="secondary" size="sm" className="rounded-md">
-                    <Link href="/dashboard">Dashboard</Link>
-                  </Button>
-                  <Button asChild variant="outline" size="sm" className="rounded-md">
-                    <Link href="/dashboard/customers">Customers</Link>
-                  </Button>
-                  <Button asChild variant="outline" size="sm" className="rounded-md">
-                    <Link href="/dashboard/leads">Leads</Link>
-                  </Button>
+                  {quickLinks.map((link, index) => (
+                    <Button
+                      key={link.href}
+                      asChild
+                      variant={index === 0 ? "secondary" : "outline"}
+                      size="sm"
+                      className="rounded-md"
+                    >
+                      <Link href={link.href}>{link.label}</Link>
+                    </Button>
+                  ))}
                 </div>
               </div>
             </div>
           </section>
 
           <section className="grid gap-4 md:grid-cols-3">
-            {[
-              { label: "Secure access", value: "Session-aware" },
-              { label: "Navigation", value: "Shared routes" },
-              { label: "UI system", value: "shadcn components" },
-            ].map((item) => (
+            {stats.map((item) => (
               <div key={item.label} className="rounded-xl border bg-card p-5 shadow-sm">
                 <p className="text-sm text-muted-foreground">{item.label}</p>
                 <p className="mt-2 text-lg font-semibold">{item.value}</p>
