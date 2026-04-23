@@ -73,7 +73,7 @@ export default function Home() {
     <div className="relative flex min-h-screen flex-col bg-background text-foreground">
       <Navbar />
       <main className="flex flex-1">
-        <div className="mx-auto flex w-full max-w-7xl flex-col gap-10 px-4 py-8 sm:px-6 sm:py-10 lg:px-8 lg:py-12">
+        <div className="mx-auto flex w-full max-w-7xl flex-col gap-8 px-4 py-6 sm:px-6 sm:py-10 lg:px-8 lg:py-12">
           <section className="grid items-center gap-8 lg:grid-cols-[1.08fr_0.92fr] lg:gap-10">
             <div className="space-y-6">
               <Badge variant="secondary" className="w-fit rounded-full px-3 py-1">
@@ -90,7 +90,7 @@ export default function Home() {
                 </p>
               </div>
 
-              <div className="flex flex-col gap-3 sm:flex-row">
+              <div className="flex flex-col gap-3 sm:flex-row sm:flex-wrap">
                 <Button asChild className="h-11 rounded-md px-5">
                   <Link href="/auth">
                     Sign in
@@ -110,23 +110,23 @@ export default function Home() {
                     key={benefit}
                     className="flex items-start gap-3 rounded-lg border border-border bg-card p-4 shadow-sm"
                   >
-                    <CheckCircle2 className="mt-0.5 h-4 w-4 text-primary" />
+                    <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-primary" />
                     <p className="text-sm leading-6 text-muted-foreground">{benefit}</p>
                   </div>
                 ))}
               </div>
             </div>
 
-            <div className="relative overflow-hidden rounded-2xl border border-border bg-card p-6 shadow-sm">
+            <div className="relative overflow-hidden rounded-2xl border border-border bg-card p-4 shadow-sm sm:p-6">
               <div className="absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-primary/80 via-primary to-primary/60" />
               <div className="space-y-2 pt-2">
                 <p className="text-sm font-medium uppercase tracking-wide text-muted-foreground">
                   Workspace overview
                 </p>
-                <h2 className="text-2xl font-semibold tracking-tight text-foreground">
+                <h2 className="text-2xl font-semibold tracking-tight text-foreground sm:text-3xl">
                   Everything in one clean shell
                 </h2>
-                <p className="text-sm leading-6 text-muted-foreground">
+                <p className="text-sm leading-6 text-muted-foreground sm:text-base">
                   Designed to feel modern, readable, and ready for day-to-day CRM work.
                 </p>
               </div>
@@ -139,7 +139,7 @@ export default function Home() {
                       key={item.title}
                       className="flex items-start gap-4 rounded-xl border border-border bg-background/60 p-4"
                     >
-                      <div className="rounded-lg bg-primary/10 p-2 text-primary">
+                      <div className="shrink-0 rounded-lg bg-primary/10 p-2 text-primary">
                         <Icon className="h-5 w-5" />
                       </div>
                       <div className="space-y-1">
@@ -175,9 +175,12 @@ export default function Home() {
             </div>
           </section>
 
-          <section className="grid gap-4 md:grid-cols-3">
+          <section className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {stats.map((item) => (
-              <div key={item.label} className="rounded-xl border border-border bg-card p-5 shadow-sm">
+              <div
+                key={item.label}
+                className="rounded-xl border border-border bg-card p-5 shadow-sm"
+              >
                 <p className="text-sm text-muted-foreground">{item.label}</p>
                 <p className="mt-2 text-lg font-semibold text-foreground">{item.value}</p>
               </div>
