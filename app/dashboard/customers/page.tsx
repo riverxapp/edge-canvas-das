@@ -32,6 +32,7 @@ const emptyForm: CustomerInput = {
 };
 
 const storageKey = "crm_customers";
+const sessionKeys = ["internal-crm-session", "crm_session"];
 
 function readCustomers(): Customer[] {
   if (typeof window === "undefined") return [];
@@ -53,6 +54,11 @@ function makeId() {
   return `cust_${Date.now()}_${Math.random().toString(36).slice(2, 8)}`;
 }
 
+function hasValidSession() {
+  if (typeof window === "undefined") return false;
+  return sessionKeys.some((key) => Boolean(window.localStorage.getItem(key)));
+}
+
 export default function CustomersPage() {
   const router = useRouter();
   const [ready, setReady] = useState(false);
@@ -62,11 +68,11 @@ export default function CustomersPage() {
   const [query, setQuery] = useState("");
 
   useEffect(() => {
-    const session = window.localStorage.getItem("crm_session");
-    if (!session) {
+    if (!hasValidSession()) {
       router.replace("/auth");
       return;
     }
+
     setCustomers(readCustomers());
     setReady(true);
   }, [router]);
@@ -132,6 +138,11 @@ export default function CustomersPage() {
     if (editingId === id) resetForm();
   }
 
+  function handleLogout() {
+    sessionKeys.forEach((key) => window.localStorage.removeItem(key));
+    router.push("/auth");
+  }
+
   if (!ready) {
     return (
       <div className="flex min-h-screen items-center justify-center bg-background text-sm text-muted-foreground">
@@ -165,10 +176,7 @@ export default function CustomersPage() {
             </Link>
             <button
               type="button"
-              onClick={() => {
-                window.localStorage.removeItem("crm_session");
-                router.push("/auth");
-              }}
+              onClick={handleLogout}
               className="inline-flex h-10 items-center justify-center rounded-md bg-primary px-4 text-sm font-medium text-primary-foreground hover:opacity-90"
             >
               Log out
