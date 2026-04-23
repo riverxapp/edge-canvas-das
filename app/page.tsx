@@ -11,7 +11,8 @@ export default function Home() {
   useEffect(() => {
     const session =
       window.localStorage.getItem("internal-crm-session") ??
-      window.localStorage.getItem("crm_session");
+      window.localStorage.getItem("crm_session") ??
+      window.localStorage.getItem("crm-session");
     const isAuthenticated = Boolean(session);
 
     if (isAuthenticated) {
