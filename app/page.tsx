@@ -52,6 +52,7 @@ const quickLinks = [
   { href: "/dashboard", label: "Dashboard" },
   { href: "/dashboard/customers", label: "Customers" },
   { href: "/dashboard/leads", label: "Leads" },
+  { href: "/features", label: "Features" },
 ];
 
 export default function Home() {
