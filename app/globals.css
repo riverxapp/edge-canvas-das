@@ -82,4 +82,40 @@
   ::selection {
     @apply bg-primary text-primary-foreground;
   }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    @apply scroll-m-20 font-semibold tracking-tight;
+  }
+
+  h1 {
+    @apply text-4xl leading-tight sm:text-5xl;
+  }
+
+  h2 {
+    @apply text-3xl leading-tight;
+  }
+
+  h3 {
+    @apply text-2xl leading-snug;
+  }
+
+  p {
+    @apply leading-7;
+  }
+
+  a {
+    @apply transition-colors;
+  }
+
+  button,
+  input,
+  select,
+  textarea {
+    @apply font-inherit;
+  }
 }
