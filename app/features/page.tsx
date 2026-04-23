@@ -1,3 +1,5 @@
+"use client";
+
 import Link from "next/link";
 import type { Metadata } from "next";
 import {
@@ -13,7 +15,6 @@ import {
 
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 
 export const metadata: Metadata = {
@@ -76,6 +77,48 @@ const sections = [
   },
 ];
 
+function UiCard({
+  children,
+  className = "",
+}: {
+  children: React.ReactNode;
+  className?: string;
+}) {
+  return (
+    <div className={`rounded-xl border border-border bg-card shadow-sm ${className}`.trim()}>
+      {children}
+    </div>
+  );
+}
+
+function UiCardHeader({ children, className = "" }: { children: React.ReactNode; className?: string }) {
+  return <div className={`flex flex-col gap-1.5 p-6 ${className}`.trim()}>{children}</div>;
+}
+
+function UiCardTitle({ children, className = "" }: { children: React.ReactNode; className?: string }) {
+  return <h2 className={`font-semibold leading-none tracking-tight ${className}`.trim()}>{children}</h2>;
+}
+
+function UiCardDescription({
+  children,
+  className = "",
+}: {
+  children: React.ReactNode;
+  className?: string;
+}) {
+  return <p className={`text-sm text-muted-foreground ${className}`.trim()}>{children}</p>;
+}
+
+function UiCardContent({
+  children,
+  className = "",
+}: {
+  children: React.ReactNode;
+  className?: string;
+}) {
+  return <div className={`px-6 pb-6 ${className}`.trim()}>{children}</div>;
+}
+
 export default function FeaturesPage() {
   return (
     <main className="min-h-screen bg-background text-foreground">
@@ -124,13 +167,15 @@ export default function FeaturesPage() {
             </div>
           </div>
 
-          <Card className="relative overflow-hidden">
+          <UiCard className="relative overflow-hidden">
             <div className="absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-primary/80 via-primary to-primary/60" />
-            <CardHeader className="pt-6">
-              <CardDescription className="uppercase tracking-wide">Workspace snapshot</CardDescription>
-              <CardTitle className="text-2xl">Everything needed to run the CRM day to day</CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-4">
+            <UiCardHeader className="pt-6">
+              <UiCardDescription className="uppercase tracking-wide">
+                Workspace snapshot
+              </UiCardDescription>
+              <UiCardTitle className="text-2xl">Everything needed to run the CRM day to day</UiCardTitle>
+            </UiCardHeader>
+            <UiCardContent className="space-y-4">
               {featureHighlights.map((item) => {
                 const Icon = item.icon;
                 return (
@@ -166,64 +211,64 @@ export default function FeaturesPage() {
                   </Button>
                 </div>
               </div>
-            </CardContent>
-          </Card>
+            </UiCardContent>
+          </UiCard>
         </section>
 
         <section className="grid gap-4 md:grid-cols-3">
-          <Card>
-            <CardHeader>
-              <CardTitle className="text-lg">Workflow</CardTitle>
-              <CardDescription>Built around the customer and lead lifecycle.</CardDescription>
-            </CardHeader>
-            <CardContent className="space-y-3">
+          <UiCard>
+            <UiCardHeader>
+              <UiCardTitle className="text-lg">Workflow</UiCardTitle>
+              <UiCardDescription>Built around the customer and lead lifecycle.</UiCardDescription>
+            </UiCardHeader>
+            <UiCardContent className="space-y-3">
               {sections[0].items.map((item) => (
                 <div key={item} className="flex items-center gap-2 text-sm text-muted-foreground">
                   <CheckCircle2 className="h-4 w-4 text-primary" />
                   <span>{item}</span>
                 </div>
               ))}
-            </CardContent>
-          </Card>
+            </UiCardContent>
+          </UiCard>
 
-          <Card>
-            <CardHeader>
-              <CardTitle className="text-lg">UI system</CardTitle>
-              <CardDescription>Consistent shadcn components and spacing.</CardDescription>
-            </CardHeader>
-            <CardContent className="space-y-3">
+          <UiCard>
+            <UiCardHeader>
+              <UiCardTitle className="text-lg">UI system</UiCardTitle>
+              <UiCardDescription>Consistent shadcn components and spacing.</UiCardDescription>
+            </UiCardHeader>
+            <UiCardContent className="space-y-3">
               {sections[1].items.map((item) => (
                 <div key={item} className="flex items-center gap-2 text-sm text-muted-foreground">
                   <CheckCircle2 className="h-4 w-4 text-primary" />
                   <span>{item}</span>
                 </div>
               ))}
-            </CardContent>
-          </Card>
+            </UiCardContent>
+          </UiCard>
 
-          <Card>
-            <CardHeader>
-              <CardTitle className="text-lg">Routes</CardTitle>
-              <CardDescription>Key areas are linked for easy navigation.</CardDescription>
-            </CardHeader>
-            <CardContent className="space-y-3">
+          <UiCard>
+            <UiCardHeader>
+              <UiCardTitle className="text-lg">Routes</UiCardTitle>
+              <UiCardDescription>Key areas are linked for easy navigation.</UiCardDescription>
+            </UiCardHeader>
+            <UiCardContent className="space-y-3">
               {sections[2].items.map((item) => (
                 <div key={item} className="flex items-center gap-2 text-sm text-muted-foreground">
                   <CheckCircle2 className="h-4 w-4 text-primary" />
                   <span>{item}</span>
                 </div>
               ))}
-            </CardContent>
-          </Card>
+            </UiCardContent>
+          </UiCard>
         </section>
 
         <section className="grid gap-4 lg:grid-cols-[1fr_1fr]">
-          <Card>
-            <CardHeader>
-              <CardTitle>Feature coverage</CardTitle>
-              <CardDescription>High-level capabilities included in the workspace.</CardDescription>
-            </CardHeader>
-            <CardContent className="grid gap-4 sm:grid-cols-2">
+          <UiCard>
+            <UiCardHeader>
+              <UiCardTitle>Feature coverage</UiCardTitle>
+              <UiCardDescription>High-level capabilities included in the workspace.</UiCardDescription>
+            </UiCardHeader>
+            <UiCardContent className="grid gap-4 sm:grid-cols-2">
               {featureHighlights.map((feature) => (
                 <article key={feature.title} className="rounded-xl border p-4">
                   <h3 className="font-medium">{feature.title}</h3>
@@ -232,15 +277,15 @@ export default function FeaturesPage() {
                   </p>
                 </article>
               ))}
-            </CardContent>
-          </Card>
+            </UiCardContent>
+          </UiCard>
 
-          <Card>
-            <CardHeader>
-              <CardTitle>What&apos;s included</CardTitle>
-              <CardDescription>The core app surfaces that support the CRM experience.</CardDescription>
-            </CardHeader>
-            <CardContent>
+          <UiCard>
+            <UiCardHeader>
+              <UiCardTitle>What&apos;s included</UiCardTitle>
+              <UiCardDescription>The core app surfaces that support the CRM experience.</UiCardDescription>
+            </UiCardHeader>
+            <UiCardContent>
               <ul className="grid gap-3 sm:grid-cols-2">
                 {sections.flatMap((section) => section.items).map((item) => (
                   <li key={item} className="rounded-lg border p-4 text-sm text-muted-foreground">
@@ -248,8 +293,8 @@ export default function FeaturesPage() {
                   </li>
                 ))}
               </ul>
-            </CardContent>
-          </Card>
+            </UiCardContent>
+          </UiCard>
         </section>
       </div>
     </main>
