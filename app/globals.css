@@ -116,6 +116,6 @@
   input,
   select,
   textarea {
-    @apply font-inherit;
+    font: inherit;
   }
 }
