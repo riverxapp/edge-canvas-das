@@ -9,10 +9,14 @@ export default function Home() {
   const router = useRouter();
 
   useEffect(() => {
-    const isAuthenticated = Boolean(
-      window.localStorage.getItem("internal-crm-session"),
-    );
-    if (isAuthenticated) router.replace("/dashboard");
+    const session =
+      window.localStorage.getItem("internal-crm-session") ??
+      window.localStorage.getItem("crm_session");
+    const isAuthenticated = Boolean(session);
+
+    if (isAuthenticated) {
+      router.replace("/dashboard");
+    }
   }, [router]);
 
   return (
