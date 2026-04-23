@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { Navbar } from "@/components/Navbar";
+import { redirect } from "next/navigation";
 
 export default function Home() {
   return (
@@ -7,6 +8,15 @@ export default function Home() {
       <Navbar />
       <main className="flex flex-1 items-center justify-center px-6 py-12">
         <section className="w-full max-w-3xl rounded-xl border bg-card p-8 shadow-sm">
+          {(() => {
+            const isAuthenticated = typeof window !== "undefined"
+              ? Boolean(window.localStorage.getItem("internal-crm-session"))
+              : false;
+            if (isAuthenticated) {
+              redirect("/dashboard");
+            }
+            return null;
+          })()}
           <div className="space-y-4 text-center">
             <p className="text-sm font-medium uppercase tracking-wide text-muted-foreground">
               Internal CRM
