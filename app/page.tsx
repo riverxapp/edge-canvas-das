@@ -1,9 +1,39 @@
 "use client";
 
 import Link from "next/link";
-import { Navbar } from "@/components/Navbar";
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
+import { ArrowRight, CheckCircle2, LayoutDashboard, LineChart, Users } from "lucide-react";
+
+import { Navbar } from "@/components/Navbar";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { Separator } from "@/components/ui/separator";
+
+const highlights = [
+  {
+    title: "Customer records",
+    description: "Keep accounts, contact details, and notes organized in one place.",
+    icon: Users,
+  },
+  {
+    title: "Lead pipeline",
+    description: "Track opportunities through qualification stages and next steps.",
+    icon: LineChart,
+  },
+  {
+    title: "Workspace dashboard",
+    description: "Review activity, surface priorities, and move faster with a clean overview.",
+    icon: LayoutDashboard,
+  },
+];
+
+const benefits = [
+  "Professional, consistent UI across the app",
+  "Accessible shadcn-based controls and spacing",
+  "Fast access to dashboard, customers, and leads",
+  "Session-aware routing for authenticated users",
+];
 
 export default function Home() {
   const router = useRouter();
@@ -23,47 +53,108 @@ export default function Home() {
   return (
     <div className="relative flex min-h-screen flex-col bg-background">
       <Navbar />
-      <main className="flex flex-1 items-center justify-center px-6 py-12">
-        <section className="w-full max-w-3xl rounded-xl border bg-card p-8 shadow-sm">
-          <div className="space-y-4 text-center">
-            <p className="text-sm font-medium uppercase tracking-wide text-muted-foreground">
-              Internal CRM
-            </p>
-            <h1 className="text-3xl font-semibold tracking-tight sm:text-4xl">
-              Welcome to the CRM workspace
-            </h1>
-            <p className="mx-auto max-w-2xl text-muted-foreground">
-              Access the authenticated dashboard to manage customers, leads, and the rest of the workspace features.
-            </p>
-          </div>
+      <main className="flex flex-1">
+        <div className="mx-auto flex w-full max-w-7xl flex-col gap-10 px-6 py-12 lg:px-8">
+          <section className="grid items-center gap-8 lg:grid-cols-[1.15fr_0.85fr]">
+            <div className="space-y-6">
+              <Badge variant="secondary" className="rounded-full px-3 py-1">
+                Internal CRM
+              </Badge>
 
-          <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
-            <Link
-              href="/auth"
-              className="rounded-md bg-primary px-4 py-2 text-primary-foreground"
-            >
-              Sign in
-            </Link>
-            <Link
-              href="/dashboard"
-              className="rounded-md border border-border px-4 py-2"
-            >
-              Go to dashboard
-            </Link>
-            <Link
-              href="/dashboard/customers"
-              className="rounded-md border border-border px-4 py-2"
-            >
-              Customers
-            </Link>
-            <Link
-              href="/dashboard/leads"
-              className="rounded-md border border-border px-4 py-2"
-            >
-              Leads
-            </Link>
-          </div>
-        </section>
+              <div className="space-y-4">
+                <h1 className="max-w-2xl text-4xl font-semibold tracking-tight sm:text-5xl">
+                  A polished workspace for customer and lead management.
+                </h1>
+                <p className="max-w-2xl text-base leading-7 text-muted-foreground sm:text-lg">
+                  A professional, responsive CRM experience built with reusable shadcn
+                  components, clear navigation, and a focused dashboard workflow.
+                </p>
+              </div>
+
+              <div className="flex flex-col gap-3 sm:flex-row">
+                <Button asChild className="h-11 rounded-md px-5">
+                  <Link href="/auth">
+                    Sign in
+                    <ArrowRight className="h-4 w-4" />
+                  </Link>
+                </Button>
+                <Button asChild variant="outline" className="h-11 rounded-md px-5">
+                  <Link href="/dashboard">Open dashboard</Link>
+                </Button>
+              </div>
+
+              <Separator className="my-6" />
+
+              <div className="grid gap-3 sm:grid-cols-2">
+                {benefits.map((benefit) => (
+                  <div key={benefit} className="flex items-start gap-3 rounded-lg border bg-card p-4 shadow-sm">
+                    <CheckCircle2 className="mt-0.5 h-4 w-4 text-primary" />
+                    <p className="text-sm leading-6 text-muted-foreground">{benefit}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            <div className="rounded-2xl border bg-card p-6 shadow-sm">
+              <div className="space-y-2">
+                <p className="text-sm font-medium uppercase tracking-wide text-muted-foreground">
+                  Workspace overview
+                </p>
+                <h2 className="text-2xl font-semibold tracking-tight">
+                  Everything in one clean shell
+                </h2>
+                <p className="text-sm leading-6 text-muted-foreground">
+                  Designed to feel modern, readable, and ready for day-to-day CRM work.
+                </p>
+              </div>
+
+              <div className="mt-6 space-y-4">
+                {highlights.map((item) => {
+                  const Icon = item.icon;
+                  return (
+                    <article key={item.title} className="flex items-start gap-4 rounded-xl border p-4">
+                      <div className="rounded-lg bg-primary/10 p-2 text-primary">
+                        <Icon className="h-5 w-5" />
+                      </div>
+                      <div className="space-y-1">
+                        <h3 className="font-medium">{item.title}</h3>
+                        <p className="text-sm leading-6 text-muted-foreground">{item.description}</p>
+                      </div>
+                    </article>
+                  );
+                })}
+              </div>
+
+              <div className="mt-6 rounded-xl border bg-muted/40 p-4">
+                <p className="text-sm font-medium">Quick access</p>
+                <div className="mt-3 flex flex-wrap gap-3">
+                  <Button asChild variant="secondary" size="sm" className="rounded-md">
+                    <Link href="/dashboard">Dashboard</Link>
+                  </Button>
+                  <Button asChild variant="outline" size="sm" className="rounded-md">
+                    <Link href="/dashboard/customers">Customers</Link>
+                  </Button>
+                  <Button asChild variant="outline" size="sm" className="rounded-md">
+                    <Link href="/dashboard/leads">Leads</Link>
+                  </Button>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <section className="grid gap-4 md:grid-cols-3">
+            {[
+              { label: "Secure access", value: "Session-aware" },
+              { label: "Navigation", value: "Shared routes" },
+              { label: "UI system", value: "shadcn components" },
+            ].map((item) => (
+              <div key={item.label} className="rounded-xl border bg-card p-5 shadow-sm">
+                <p className="text-sm text-muted-foreground">{item.label}</p>
+                <p className="mt-2 text-lg font-semibold">{item.value}</p>
+              </div>
+            ))}
+          </section>
+        </div>
       </main>
     </div>
   );
