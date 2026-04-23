@@ -1,16 +1,19 @@
+ "use client";
+
 import Link from "next/link";
 import { Navbar } from "@/components/Navbar";
-import { redirect } from "next/navigation";
+import { useEffect } from "react";
+import { useRouter } from "next/navigation";
 
 export default function Home() {
-  const isAuthenticated =
-    typeof window !== "undefined"
-      ? Boolean(window.localStorage.getItem("internal-crm-session"))
-      : false;
+  const router = useRouter();
 
-  if (isAuthenticated) {
-    redirect("/dashboard");
-  }
+  useEffect(() => {
+    const isAuthenticated = Boolean(
+      window.localStorage.getItem("internal-crm-session"),
+    );
+    if (isAuthenticated) router.replace("/dashboard");
+  }, [router]);
 
   return (
     <div className="relative flex min-h-screen flex-col bg-background">
