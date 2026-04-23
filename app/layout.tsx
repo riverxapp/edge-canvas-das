@@ -6,8 +6,8 @@ import "./globals.css";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Starter",
-  description: "A blank starter page. Ready to build.",
+  title: "Unified CRM",
+  description: "Internal CRM app for managing customers and leads.",
 };
 
 export default function RootLayout({
