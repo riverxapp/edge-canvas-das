@@ -9,6 +9,7 @@ type SessionUser = {
 };
 
 const SESSION_KEY = "internal-crm-session";
+const LEGACY_SESSION_KEY = "crm_session";
 const DEFAULT_EMAIL = "internal@company.com";
 const DEFAULT_PASSWORD = "crm1234";
 
@@ -16,7 +17,10 @@ function readSession(): SessionUser | null {
   if (typeof window === "undefined") return null;
 
   try {
-    const raw = window.localStorage.getItem(SESSION_KEY);
+    const raw =
+      window.localStorage.getItem(SESSION_KEY) ??
+      window.localStorage.getItem(LEGACY_SESSION_KEY);
+
     if (!raw) return null;
     return JSON.parse(raw) as SessionUser;
   } catch {
@@ -25,7 +29,14 @@ function readSession(): SessionUser | null {
 }
 
 function saveSession(user: SessionUser) {
-  window.localStorage.setItem(SESSION_KEY, JSON.stringify(user));
+  const serialized = JSON.stringify(user);
+  window.localStorage.setItem(SESSION_KEY, serialized);
+  window.localStorage.setItem(LEGACY_SESSION_KEY, serialized);
+}
+
+function clearSession() {
+  window.localStorage.removeItem(SESSION_KEY);
+  window.localStorage.removeItem(LEGACY_SESSION_KEY);
 }
 
 export default function AuthPage() {
@@ -67,10 +78,11 @@ export default function AuthPage() {
   }
 
   function handleLogout() {
-    window.localStorage.removeItem(SESSION_KEY);
+    clearSession();
     setEmail(DEFAULT_EMAIL);
     setPassword(DEFAULT_PASSWORD);
     setError("");
+    setLoading(false);
   }
 
   return (
