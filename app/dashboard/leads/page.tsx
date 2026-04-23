@@ -22,6 +22,13 @@ const emptyLead: Omit<Lead, "id"> = {
 
 const statusOptions = ["New", "Working", "Qualified", "Won", "Lost"];
 
+const SESSION_KEYS = ["internal-crm-session", "crm_session", "crm-session"];
+
+function hasSession() {
+  if (typeof window === "undefined") return false;
+  return SESSION_KEYS.some((key) => Boolean(window.localStorage.getItem(key)));
+}
+
 export default function LeadsPage() {
   const router = useRouter();
   const [leads, setLeads] = useState<Lead[]>([]);
@@ -31,14 +38,10 @@ export default function LeadsPage() {
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  const title = useMemo(
-    () => (editingId ? "Edit lead" : "Add lead"),
-    [editingId],
-  );
+  const title = useMemo(() => (editingId ? "Edit lead" : "Add lead"), [editingId]);
 
   useEffect(() => {
-    const session = localStorage.getItem("crm-session");
-    if (!session) {
+    if (!hasSession()) {
       router.replace("/auth");
       return;
     }
@@ -147,8 +150,7 @@ export default function LeadsPage() {
               </p>
               <h1 className="text-3xl font-semibold">Leads</h1>
               <p className="mt-2 max-w-2xl text-sm text-muted-foreground">
-                Track prospects, deal value, and qualification status in one
-                place.
+                Track prospects, deal value, and qualification status in one place.
               </p>
             </div>
             <div className="flex gap-3">
@@ -171,15 +173,11 @@ export default function LeadsPage() {
         </header>
 
         <section className="grid gap-8 lg:grid-cols-[360px_1fr]">
-          <form
-            onSubmit={handleSubmit}
-            className="rounded-lg border border-border bg-card p-6 shadow-sm"
-          >
+          <form onSubmit={handleSubmit} className="rounded-lg border border-border bg-card p-6 shadow-sm">
             <div className="mb-6">
               <h2 className="text-lg font-semibold">{title}</h2>
               <p className="text-sm text-muted-foreground">
-                Capture lead details and update qualification as the pipeline
-                progresses.
+                Capture lead details and update qualification as the pipeline progresses.
               </p>
             </div>
 
@@ -311,21 +309,11 @@ export default function LeadsPage() {
               <table className="min-w-full divide-y divide-border">
                 <thead className="bg-muted/50">
                   <tr>
-                    <th className="px-4 py-3 text-left text-sm font-medium">
-                      Lead
-                    </th>
-                    <th className="px-4 py-3 text-left text-sm font-medium">
-                      Company
-                    </th>
-                    <th className="px-4 py-3 text-left text-sm font-medium">
-                      Status
-                    </th>
-                    <th className="px-4 py-3 text-left text-sm font-medium">
-                      Value
-                    </th>
-                    <th className="px-4 py-3 text-right text-sm font-medium">
-                      Actions
-                    </th>
+                    <th className="px-4 py-3 text-left text-sm font-medium">Lead</th>
+                    <th className="px-4 py-3 text-left text-sm font-medium">Company</th>
+                    <th className="px-4 py-3 text-left text-sm font-medium">Status</th>
+                    <th className="px-4 py-3 text-left text-sm font-medium">Value</th>
+                    <th className="px-4 py-3 text-right text-sm font-medium">Actions</th>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-border">
@@ -333,9 +321,7 @@ export default function LeadsPage() {
                     <tr key={lead.id} className="bg-background">
                       <td className="px-4 py-3">
                         <div className="font-medium">{lead.name}</div>
-                        <div className="text-sm text-muted-foreground">
-                          {lead.email}
-                        </div>
+                        <div className="text-sm text-muted-foreground">{lead.email}</div>
                       </td>
                       <td className="px-4 py-3 text-sm">{lead.company}</td>
                       <td className="px-4 py-3 text-sm">{lead.status}</td>
@@ -362,10 +348,7 @@ export default function LeadsPage() {
                   ))}
                   {!loading && leads.length === 0 ? (
                     <tr>
-                      <td
-                        colSpan={5}
-                        className="px-4 py-10 text-center text-sm text-muted-foreground"
-                      >
+                      <td colSpan={5} className="px-4 py-10 text-center text-sm text-muted-foreground">
                         No leads yet. Add one to get started.
                       </td>
                     </tr>
