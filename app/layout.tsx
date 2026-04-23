@@ -13,27 +13,6 @@ import {
 
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-
-function Card({ className = "", ...props }: React.HTMLAttributes<HTMLDivElement>) {
-  return <div className={className} {...props} />;
-}
-
-function CardHeader({ className = "", ...props }: React.HTMLAttributes<HTMLDivElement>) {
-  return <div className={className} {...props} />;
-}
-
-function CardContent({ className = "", ...props }: React.HTMLAttributes<HTMLDivElement>) {
-  return <div className={className} {...props} />;
-}
-
-function CardTitle({ className = "", ...props }: React.HTMLAttributes<HTMLHeadingElement>) {
-  return <h3 className={className} {...props} />;
-}
-
-function CardDescription({ className = "", ...props }: React.HTMLAttributes<HTMLParagraphElement>) {
-  return <p className={className} {...props} />;
-}
-
 import { Separator } from "@/components/ui/separator";
 
 export const metadata: Metadata = {
@@ -144,106 +123,108 @@ export default function FeaturesPage() {
             </div>
           </div>
 
-          <Card className="relative overflow-hidden">
+          <div className="relative overflow-hidden rounded-lg border bg-card">
             <div className="absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-primary/80 via-primary to-primary/60" />
-            <CardHeader className="pt-6">
-              <CardDescription className="uppercase tracking-wide">Workspace snapshot</CardDescription>
-              <CardTitle className="text-2xl">Everything needed to run the CRM day to day</CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              {featureHighlights.map((item) => {
-                const Icon = item.icon;
-                return (
-                  <article
-                    key={item.title}
-                    className="flex items-start gap-4 rounded-xl border border-border bg-background/60 p-4"
-                  >
-                    <div className="rounded-lg bg-primary/10 p-2 text-primary">
-                      <Icon className="h-5 w-5" />
-                    </div>
-                    <div className="space-y-1">
-                      <h2 className="font-medium text-foreground">{item.title}</h2>
-                      <p className="text-sm leading-6 text-muted-foreground">{item.description}</p>
-                    </div>
-                  </article>
-                );
-              })}
+            <div className="pt-6">
+              <div className="px-6">
+                <p className="uppercase tracking-wide text-muted-foreground">Workspace snapshot</p>
+                <h2 className="text-2xl font-semibold">Everything needed to run the CRM day to day</h2>
+              </div>
+              <div className="space-y-4 p-6">
+                {featureHighlights.map((item) => {
+                  const Icon = item.icon;
+                  return (
+                    <article
+                      key={item.title}
+                      className="flex items-start gap-4 rounded-xl border border-border bg-background/60 p-4"
+                    >
+                      <div className="rounded-lg bg-primary/10 p-2 text-primary">
+                        <Icon className="h-5 w-5" />
+                      </div>
+                      <div className="space-y-1">
+                        <h2 className="font-medium text-foreground">{item.title}</h2>
+                        <p className="text-sm leading-6 text-muted-foreground">{item.description}</p>
+                      </div>
+                    </article>
+                  );
+                })}
 
-              <div className="rounded-xl border border-border bg-muted/40 p-4">
-                <div className="flex items-center gap-2">
-                  <Search className="h-4 w-4 text-primary" />
-                  <p className="text-sm font-medium text-foreground">Fast access</p>
-                </div>
-                <div className="mt-3 flex flex-wrap gap-3">
-                  <Button asChild variant="secondary" size="sm" className="rounded-md">
-                    <Link href="/dashboard">Dashboard</Link>
-                  </Button>
-                  <Button asChild variant="outline" size="sm" className="rounded-md">
-                    <Link href="/dashboard/customers">Customers</Link>
-                  </Button>
-                  <Button asChild variant="outline" size="sm" className="rounded-md">
-                    <Link href="/dashboard/leads">Leads</Link>
-                  </Button>
+                <div className="rounded-xl border border-border bg-muted/40 p-4">
+                  <div className="flex items-center gap-2">
+                    <Search className="h-4 w-4 text-primary" />
+                    <p className="text-sm font-medium text-foreground">Fast access</p>
+                  </div>
+                  <div className="mt-3 flex flex-wrap gap-3">
+                    <Button asChild variant="secondary" size="sm" className="rounded-md">
+                      <Link href="/dashboard">Dashboard</Link>
+                    </Button>
+                    <Button asChild variant="outline" size="sm" className="rounded-md">
+                      <Link href="/dashboard/customers">Customers</Link>
+                    </Button>
+                    <Button asChild variant="outline" size="sm" className="rounded-md">
+                      <Link href="/dashboard/leads">Leads</Link>
+                    </Button>
+                  </div>
                 </div>
               </div>
-            </CardContent>
-          </Card>
+            </div>
+          </div>
         </section>
 
         <section className="grid gap-4 md:grid-cols-3">
-          <Card>
-            <CardHeader>
-              <CardTitle className="text-lg">Workflow</CardTitle>
-              <CardDescription>Built around the customer and lead lifecycle.</CardDescription>
-            </CardHeader>
-            <CardContent className="space-y-3">
+          <div className="rounded-lg border bg-card">
+            <div className="p-6">
+              <h3 className="text-lg font-semibold">Workflow</h3>
+              <p className="text-sm text-muted-foreground">Built around the customer and lead lifecycle.</p>
+            </div>
+            <div className="space-y-3 px-6 pb-6">
               {sections[0].items.map((item) => (
                 <div key={item} className="flex items-center gap-2 text-sm text-muted-foreground">
                   <CheckCircle2 className="h-4 w-4 text-primary" />
                   <span>{item}</span>
                 </div>
               ))}
-            </CardContent>
-          </Card>
+            </div>
+          </div>
 
-          <Card>
-            <CardHeader>
-              <CardTitle className="text-lg">UI system</CardTitle>
-              <CardDescription>Consistent shadcn components and spacing.</CardDescription>
-            </CardHeader>
-            <CardContent className="space-y-3">
+          <div className="rounded-lg border bg-card">
+            <div className="p-6">
+              <h3 className="text-lg font-semibold">UI system</h3>
+              <p className="text-sm text-muted-foreground">Consistent shadcn components and spacing.</p>
+            </div>
+            <div className="space-y-3 px-6 pb-6">
               {sections[1].items.map((item) => (
                 <div key={item} className="flex items-center gap-2 text-sm text-muted-foreground">
                   <CheckCircle2 className="h-4 w-4 text-primary" />
                   <span>{item}</span>
                 </div>
               ))}
-            </CardContent>
-          </Card>
+            </div>
+          </div>
 
-          <Card>
-            <CardHeader>
-              <CardTitle className="text-lg">Routes</CardTitle>
-              <CardDescription>Key areas are linked for easy navigation.</CardDescription>
-            </CardHeader>
-            <CardContent className="space-y-3">
+          <div className="rounded-lg border bg-card">
+            <div className="p-6">
+              <h3 className="text-lg font-semibold">Routes</h3>
+              <p className="text-sm text-muted-foreground">Key areas are linked for easy navigation.</p>
+            </div>
+            <div className="space-y-3 px-6 pb-6">
               {sections[2].items.map((item) => (
                 <div key={item} className="flex items-center gap-2 text-sm text-muted-foreground">
                   <CheckCircle2 className="h-4 w-4 text-primary" />
                   <span>{item}</span>
                 </div>
               ))}
-            </CardContent>
-          </Card>
+            </div>
+          </div>
         </section>
 
         <section className="grid gap-4 lg:grid-cols-[1fr_1fr]">
-          <Card>
-            <CardHeader>
-              <CardTitle>Feature coverage</CardTitle>
-              <CardDescription>High-level capabilities included in the workspace.</CardDescription>
-            </CardHeader>
-            <CardContent className="grid gap-4 sm:grid-cols-2">
+          <div className="rounded-lg border bg-card">
+            <div className="p-6">
+              <h3 className="text-lg font-semibold">Feature coverage</h3>
+              <p className="text-sm text-muted-foreground">High-level capabilities included in the workspace.</p>
+            </div>
+            <div className="grid gap-4 p-6 sm:grid-cols-2">
               {featureHighlights.map((feature) => (
                 <article key={feature.title} className="rounded-xl border p-4">
                   <h3 className="font-medium">{feature.title}</h3>
@@ -252,15 +233,15 @@ export default function FeaturesPage() {
                   </p>
                 </article>
               ))}
-            </CardContent>
-          </Card>
+            </div>
+          </div>
 
-          <Card>
-            <CardHeader>
-              <CardTitle>What&apos;s included</CardTitle>
-              <CardDescription>The core app surfaces that support the CRM experience.</CardDescription>
-            </CardHeader>
-            <CardContent>
+          <div className="rounded-lg border bg-card">
+            <div className="p-6">
+              <h3 className="text-lg font-semibold">What&apos;s included</h3>
+              <p className="text-sm text-muted-foreground">The core app surfaces that support the CRM experience.</p>
+            </div>
+            <div className="p-6">
               <ul className="grid gap-3 sm:grid-cols-2">
                 {sections.flatMap((section) => section.items).map((item) => (
                   <li key={item} className="rounded-lg border p-4 text-sm text-muted-foreground">
@@ -268,8 +249,8 @@ export default function FeaturesPage() {
                   </li>
                 ))}
               </ul>
-            </CardContent>
-          </Card>
+            </div>
+          </div>
         </section>
       </div>
     </main>
